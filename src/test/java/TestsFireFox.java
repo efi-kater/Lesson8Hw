@@ -37,11 +37,12 @@ public class TestsFireFox {
     @Test
     public void findTextByName(){
         driver.get(Constants.SELENIUM_SITE);
-        System.out.println(driver.findElement(By.name("cmd")));
+        driver.findElement(By.cssSelector("span[class=DocSearch-Button-Placeholder]")).click();
+        driver.findElement(By.cssSelector("input[class=DocSearch-Input]")).sendKeys("Selenium");
 
     }
     @AfterMethod
-    public void closeSession(){
+    public void closeSession() throws InterruptedException {
         driver.quit();
     }
 }
