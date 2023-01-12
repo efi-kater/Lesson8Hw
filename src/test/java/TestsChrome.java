@@ -1,11 +1,13 @@
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.openqa.selenium.JavascriptExecutor;
 
 
 import java.util.ArrayList;
@@ -38,6 +40,18 @@ public class TestsChrome {
         String expectedTitle = "Amazon.com : Leather Shoes";
         driver.findElement(By.cssSelector("input[id=twotabsearchtextbox]")).sendKeys("Leather Shoes");
         driver.findElement(By.id("nav-search-submit-button")).click();
+        Assert.assertEquals(driver.getTitle(),expectedTitle);
+
+    }
+
+    @Test
+    public void findTitleWithScript()  {
+        driver.get(Constants.AMAZON_SITE);
+        String expectedTitle = "Amazon.com : Leather Shoes";
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript( "document.getElementById('twotabsearchtextbox').value='Leather Shoes'");
+        WebElement submitSearch = driver.findElement(By.id("nav-search-submit-button"));
+        js.executeScript("arguments[0].click()",submitSearch);
         Assert.assertEquals(driver.getTitle(),expectedTitle);
 
     }
